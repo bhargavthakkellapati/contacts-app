@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const contacts=mongoose.Schema({
      firstname:{
         type :String,
-        required: true,
+        
     },
 
     surname: {
@@ -17,7 +17,7 @@ const contacts=mongoose.Schema({
     }, 
      phone : {
         type : Number,
-        required:true,
+       
         minlength:10,
         maxlength:10
 
