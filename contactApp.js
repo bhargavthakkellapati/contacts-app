@@ -82,7 +82,7 @@ app .delete('/deletecontact_:id',async(req,res)=>{
     const status={
       status:200,
       message:"success",
-      response:"contact deleted"
+      response:deletedata
     }
     console.log(status)
     return res.json(status)
