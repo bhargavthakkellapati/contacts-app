@@ -1,16 +1,17 @@
 const express = require('express')
+
 const mongoose = require('mongoose')
 const contacts = require('./contactModel')
+const router=express.Router()
 const app = express()
 app.use(express.json())
 
 mongoose.connect('mongodb+srv://jayakrishnanare:BQTFTGmnLY3qWEbv@cluster0.mbdeahy.mongodb.net/')
-.then(()=>console.log('db connected')
-).catch(err => console.log(err))
-//create contact
+// .then(()=>console.log('db connected')
+// ).catch(err => console.log(err))
+   //create contact                 
 app.post('/addcontacts/',async(req,res) => {
     const{firstname, surname,company,phone,phoneNumberType,email,isFav}=req.body;
-// console.log("First Name --> ",firstname,"sur name-->",surname,"company-->",company,phone)
 
     try {
         const newdata=new contacts({firstname, surname,company,phone,phoneNumberType,email,isFav})
@@ -22,12 +23,16 @@ app.post('/addcontacts/',async(req,res) => {
     
         }
         console.log(status)
-        return res.json(status)
+        return res.json(status) 
 
         
     }
     catch(err) {
         console.log(err.message)
+        return res.status(500).json({
+          status:500,
+          message:"internal setver error"
+        })
     }
 
    
@@ -254,5 +259,5 @@ catch(err){
 }
   })
     
-
+modules.exports=router;
 app.listen(500, ()=>console.log('server is running'))
