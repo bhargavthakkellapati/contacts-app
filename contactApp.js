@@ -12,12 +12,12 @@ mongoose.connect('mongodb+srv://jayakrishnanare:BQTFTGmnLY3qWEbv@cluster0.mbdeah
    //create contact                 
 app.post('/addcontacts/',async(req,res) => {
     const{firstname, surname,company,phone,phoneNumberType,email,isFav}=req.body;
-
+console.log(req.body)
     try {
         const newdata=new contacts({firstname, surname,company,phone,phoneNumberType,email,isFav})
          const result=await newdata.save()
          
-         const status={status :200,
+         const status={status :201,
           message:'success',
           response:result
     
@@ -31,7 +31,7 @@ app.post('/addcontacts/',async(req,res) => {
         console.log(err.message)
         return res.status(500).json({
           status:500,
-          message:"internal setver error"
+          message:"internal server error"
         })
     }
 
@@ -43,13 +43,13 @@ app.get('/getcontacts/',async (req,res)=>{
      try{
         const alldata=await contacts.find()
          
-        const status={
+        const Status={
           status:200,
           message:"success",
           response:alldata
         }
-        console.log(status)
-        return res.json(status)
+        console.log(Status)
+        return res.json(Status)
      }
      catch(err){
         console.log(err.message)
@@ -85,7 +85,7 @@ app .delete('/deletecontact_:id',async(req,res)=>{
     try {
     const deletedata = await contacts.findByIdAndDelete(req.params.id)
     const status={
-      status:200,
+      status:404,
       message:"success",
       response:deletedata
     }
@@ -165,7 +165,7 @@ app.get('/search/', async (req, res) => {
       const edit=await contacts.findByIdAndUpdate(req.params.id,{firstname,surname,phone,email,phoneNumberType,company,isFav},{new:true});
      
       const status={
-        status:201,
+        status:200,
         message:"success",
         response:edit
       }
@@ -259,5 +259,7 @@ catch(err){
 }
   })
     
-modules.exports=router;
+// modules.exports=router;
 app.listen(500, ()=>console.log('server is running'))
+
+module.exports=app;
